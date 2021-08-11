@@ -1,0 +1,28 @@
+<h1><%= @restaurant.name %></h1>
+
+<ul>
+  <li><%= @restaurant.category %></li>
+  <li><%= @restaurant.address %></li>
+  <li><%= @restaurant.phone_number %></li>
+</ul>
+
+<div class="d-flex justify-content-between">
+  <div class="d-flex flex-column">
+    <% @restaurant.reviews.each do |review| %>
+      <div class="card mb-3" style="width: 18rem;">
+        <div class="card-body">
+          <p><strong><%= review.rating %> / 5</strong></p>
+          <p><%= review.content %></p>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  <%= simple_form_for [ @restaurant, @review ] do |f| %>
+    <div class="card p-3" style="width: 600px;">
+      <h4>New review</h4>
+      <%= f.input :content %>
+      <%= f.input :rating, collection: Review::RATINGS %>
+      <%= f.submit "Submit review", class: "btn btn-primary mt-3" %>
+    </div>
+  <% end %>
+</div>
